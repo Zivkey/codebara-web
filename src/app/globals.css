@@ -93,6 +93,18 @@ html {
   box-shadow: 0 8px 32px rgba(196, 129, 58, 0.15);
 }
 
+.card-hover-hacker:hover {
+  transform: translateY(-4px);
+  border-color: var(--hacker);
+  box-shadow: 0 8px 32px rgba(0, 255, 65, 0.12);
+}
+
+.card-hover-coffee:hover {
+  transform: translateY(-4px);
+  border-color: var(--coffee);
+  box-shadow: 0 8px 32px rgba(166, 124, 82, 0.15);
+}
+
 /* Floating code particles */
 @keyframes float {
   0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }

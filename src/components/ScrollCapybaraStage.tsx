@@ -38,7 +38,7 @@ export default function ScrollCapybaraStage() {
   const chapterProgress1 = useMotionValue(0);
   const chapterProgress2 = useMotionValue(0);
   const chapterProgress3 = useMotionValue(0);
-  const chapterProgressAll = [chapterProgress0, chapterProgress1, chapterProgress2, chapterProgress3];
+  const chapterProgressAll = useRef([chapterProgress0, chapterProgress1, chapterProgress2, chapterProgress3]);
 
   const handleScrollProgress = useCallback(
     (progress: number) => {
@@ -95,17 +95,19 @@ export default function ScrollCapybaraStage() {
         const [start, end] = chapter.scrollRange;
         if (chapter.id === activeChapter) {
           const local = progress >= 1 ? 1 : (progress - start) / (end - start);
-          chapterProgressAll[chapter.id].set(local);
+          chapterProgressAll.current[chapter.id].set(local);
         } else {
           // Set to value past exitEnd so all elements are at opacity 0
-          chapterProgressAll[chapter.id].set(chapter.id === 0 ? 1 : 0);
+          chapterProgressAll.current[chapter.id].set(chapter.id === 0 ? 1 : 0);
         }
       }
 
       setScrollPercent(progress);
       setCurrentChapter(activeChapter);
+      // Notify navbar of chapter change
+      window.dispatchEvent(new CustomEvent("chapterChange", { detail: activeChapter }));
     },
-    [chapterProgressAll]
+    []
   );
 
   useEffect(() => {

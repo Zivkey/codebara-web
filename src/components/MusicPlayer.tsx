@@ -2,10 +2,19 @@
 
 import { useRef, useState, useEffect } from "react";
 
-export default function MusicPlayer() {
+const chapterAccentColors: Record<number, string> = {
+  0: "#C4813A",
+  1: "#00FF41",
+  2: "#A67C52",
+  3: "#C4813A",
+};
+
+export default function MusicPlayer({ chapter = 0 }: { chapter?: number }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [volume, setVolume] = useState(0.08);
+
+  const accentColor = chapterAccentColors[chapter] || chapterAccentColors[0];
 
   useEffect(() => {
     if (audioRef.current) {
@@ -43,10 +52,10 @@ export default function MusicPlayer() {
 
       <button
         onClick={togglePlay}
-        className="flex items-center text-cream/50 hover:text-capybara transition-colors"
+        className="flex items-center transition-colors"
         aria-label={isPlaying ? "Pause music" : "Play music"}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isPlaying ? "#C4813A" : "rgba(240,230,210,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isPlaying ? accentColor : "rgba(240,230,210,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.5s ease" }}>
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
           {isPlaying && (
             <>
@@ -64,8 +73,31 @@ export default function MusicPlayer() {
         step="0.01"
         value={volume}
         onChange={(e) => setVolume(parseFloat(e.target.value))}
-        className="w-16 h-[3px] appearance-none bg-cream/20 rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-capybara [&::-webkit-slider-thumb]:shadow-[0_0_6px_rgba(196,129,58,0.5)] [&::-moz-range-thumb]:w-2.5 [&::-moz-range-thumb]:h-2.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-capybara [&::-moz-range-thumb]:shadow-[0_0_6px_rgba(196,129,58,0.5)]"
+        className="w-16 h-[3px] appearance-none bg-cream/20 rounded-full cursor-pointer"
+        style={{
+          accentColor,
+        }}
       />
+      <style jsx>{`
+        input[type="range"]::-webkit-slider-thumb {
+          appearance: none;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: ${accentColor};
+          box-shadow: 0 0 6px ${accentColor}80;
+          transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+        input[type="range"]::-moz-range-thumb {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: ${accentColor};
+          box-shadow: 0 0 6px ${accentColor}80;
+          border: none;
+          transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+      `}</style>
     </div>
   );
 }

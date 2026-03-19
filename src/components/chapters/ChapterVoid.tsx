@@ -34,7 +34,7 @@ export default function ChapterVoid({ progress, active }: Props) {
         <div className="flex items-center gap-3 mb-5">
           <div className="w-10 h-[2px] bg-capybara/50" />
           <span className="font-mono text-xs text-capybara/70 uppercase tracking-[0.3em]">
-            est. 2024
+            est. 2026
           </span>
         </div>
         <h1 className="font-syne text-6xl sm:text-8xl lg:text-[7rem] font-bold tracking-tight leading-[0.9]">

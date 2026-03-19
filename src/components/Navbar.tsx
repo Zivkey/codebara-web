@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MusicPlayer from "./MusicPlayer";
 
@@ -10,8 +10,26 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
+const chapterThemes: Record<number, { accent: string; accentHover: string; border: string; btnBg: string; btnText: string; label: string }> = {
+  0: { accent: "text-capybara", accentHover: "hover:text-capybara", border: "border-capybara/50", btnBg: "hover:bg-capybara/10", btnText: "text-capybara", label: "Let's Talk" },
+  1: { accent: "text-hacker", accentHover: "hover:text-hacker", border: "border-hacker/50", btnBg: "hover:bg-hacker/10", btnText: "text-hacker", label: "$ connect" },
+  2: { accent: "text-coffee", accentHover: "hover:text-coffee", border: "border-coffee/50", btnBg: "hover:bg-coffee/10", btnText: "text-coffee", label: "Let's Chat" },
+  3: { accent: "text-capybara", accentHover: "hover:text-capybara", border: "border-capybara/50", btnBg: "hover:bg-capybara/10", btnText: "text-capybara", label: "Get In Touch" },
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [chapter, setChapter] = useState(0);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setChapter((e as CustomEvent).detail);
+    };
+    window.addEventListener("chapterChange", handler);
+    return () => window.removeEventListener("chapterChange", handler);
+  }, []);
+
+  const theme = chapterThemes[chapter] || chapterThemes[0];
 
   const scrollTo = (href: string) => {
     setIsOpen(false);
@@ -32,12 +50,12 @@ export default function Navbar() {
           onClick={() => scrollTo("#hero")}
           className="font-syne text-2xl font-bold tracking-tight"
         >
-          Code<span className="text-capybara">bara</span>
+          Code<span className={`${theme.accent} transition-colors duration-500`}>bara</span>
         </button>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          <MusicPlayer />
+          <MusicPlayer chapter={chapter} />
           {navItems.map((item, i) => (
             <motion.button
               key={item.label}
@@ -45,7 +63,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.1 }}
               onClick={() => scrollTo(item.href)}
-              className="font-mono text-sm text-cream/60 hover:text-capybara transition-colors"
+              className={`font-mono text-sm text-cream/60 ${theme.accentHover} transition-colors duration-300`}
             >
               {item.label}
             </motion.button>
@@ -55,9 +73,9 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             onClick={() => scrollTo("#contact")}
-            className="btn-glow font-mono text-sm px-4 py-2 border border-capybara/50 rounded-lg text-capybara hover:bg-capybara/10"
+            className={`btn-glow font-mono text-sm px-4 py-2 border ${theme.border} rounded-lg ${theme.btnText} ${theme.btnBg} transition-colors duration-500`}
           >
-            Let&apos;s Talk
+            {theme.label}
           </motion.button>
         </div>
 
@@ -93,21 +111,21 @@ export default function Navbar() {
             className="md:hidden overflow-hidden"
           >
             <div className="flex flex-col gap-4 pt-6 pb-4">
-              <MusicPlayer />
+              <MusicPlayer chapter={chapter} />
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollTo(item.href)}
-                  className="font-mono text-sm text-cream/60 hover:text-capybara transition-colors text-left"
+                  className={`font-mono text-sm text-cream/60 ${theme.accentHover} transition-colors text-left`}
                 >
                   {item.label}
                 </button>
               ))}
               <button
                 onClick={() => scrollTo("#contact")}
-                className="font-mono text-sm px-4 py-2 border border-capybara/50 rounded-lg text-capybara hover:bg-capybara/10 w-fit"
+                className={`font-mono text-sm px-4 py-2 border ${theme.border} rounded-lg ${theme.btnText} ${theme.btnBg} w-fit transition-colors duration-500`}
               >
-                Let&apos;s Talk
+                {theme.label}
               </button>
             </div>
           </motion.div>

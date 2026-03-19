@@ -82,7 +82,7 @@ export default function ChapterBuild({ progress, active }: Props) {
             <motion.div
               key={service.title}
               style={cardStyles[i]}
-              className="card-hover group relative border border-hacker/20 rounded-2xl p-8 sm:p-10 bg-[#020d02]/95 backdrop-blur-md overflow-hidden"
+              className="card-hover card-hover-hacker group relative border border-hacker/20 rounded-2xl p-8 sm:p-10 bg-[#020d02]/95 backdrop-blur-md overflow-hidden"
             >
               {/* Terminal top bar */}
               <div className="absolute top-0 left-0 right-0 h-8 bg-hacker/[0.06] border-b border-hacker/10 flex items-center px-4 gap-2">

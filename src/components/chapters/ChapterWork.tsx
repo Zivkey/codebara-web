@@ -67,7 +67,7 @@ export default function ChapterWork({ progress, active }: Props) {
           <motion.div
             key={project.title}
             style={cardStyles[i]}
-            className="card-hover group relative border border-coffee/15 rounded-2xl overflow-hidden bg-[#1a1308]/90 backdrop-blur-md"
+            className="card-hover card-hover-coffee group relative border border-coffee/15 rounded-2xl overflow-hidden bg-[#1a1308]/90 backdrop-blur-md"
           >
             <div className="p-3 sm:p-4 lg:p-5">
               <div className="flex items-center justify-between mb-1 sm:mb-3">
