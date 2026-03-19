@@ -62,30 +62,30 @@ export default function ChapterWork({ progress, active }: Props) {
       </motion.div>
 
       {/* PORTFOLIO CARDS - warm cozy style, stacked left */}
-      <div className="absolute left-6 sm:left-12 lg:left-24 top-[32%] sm:top-[34%] w-[340px] sm:w-[380px] flex flex-col gap-4">
+      <div className="absolute left-4 right-4 sm:left-12 sm:right-auto lg:left-24 top-[22%] sm:top-[24%] sm:w-[380px] flex flex-col gap-2 sm:gap-3">
         {portfolio.map((project, i) => (
           <motion.div
             key={project.title}
             style={cardStyles[i]}
             className="card-hover group relative border border-coffee/15 rounded-2xl overflow-hidden bg-[#1a1308]/90 backdrop-blur-md"
           >
-            <div className="p-5 sm:p-6">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-syne text-lg font-bold text-cream">
+            <div className="p-3 sm:p-4 lg:p-5">
+              <div className="flex items-center justify-between mb-1 sm:mb-3">
+                <h3 className="font-syne text-base sm:text-lg font-bold text-cream">
                   {project.title}
                 </h3>
                 <span className="font-syne text-xs text-coffee/40 italic">
                   no.{i + 1}
                 </span>
               </div>
-              <p className="font-mono text-xs text-latte/60 mb-4 leading-relaxed line-clamp-2">
+              <p className="font-mono text-xs text-latte/60 mb-2 sm:mb-4 leading-relaxed line-clamp-1 sm:line-clamp-2">
                 {project.description}
               </p>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1 sm:gap-1.5">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="font-mono text-[11px] px-3 py-1 rounded-full border border-coffee/20 text-coffee/80 bg-coffee/[0.08]"
+                    className="font-mono text-[10px] sm:text-[11px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-coffee/20 text-coffee/80 bg-coffee/[0.08]"
                   >
                     {tag}
                   </span>

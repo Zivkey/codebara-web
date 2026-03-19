@@ -6,7 +6,6 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [volume, setVolume] = useState(0.08);
-  const [showSlider, setShowSlider] = useState(false);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -39,16 +38,12 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div
-      className="relative flex items-center gap-2"
-      onMouseEnter={() => setShowSlider(true)}
-      onMouseLeave={() => setShowSlider(false)}
-    >
+    <div className="flex items-center gap-2">
       <audio ref={audioRef} src="/audio/jazz.mp3" loop preload="auto" />
 
       <button
         onClick={togglePlay}
-        className="flex items-center gap-2 text-cream/50 hover:text-capybara transition-colors"
+        className="flex items-center text-cream/50 hover:text-capybara transition-colors"
         aria-label={isPlaying ? "Pause music" : "Play music"}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isPlaying ? "#C4813A" : "rgba(240,230,210,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -62,20 +57,15 @@ export default function MusicPlayer() {
         </svg>
       </button>
 
-      <div
-        className="overflow-hidden flex items-center transition-all duration-200"
-        style={{ width: showSlider ? 80 : 0, opacity: showSlider ? 1 : 0 }}
-      >
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={(e) => setVolume(parseFloat(e.target.value))}
-          className="w-full h-[3px] appearance-none bg-cream/20 rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-capybara [&::-webkit-slider-thumb]:shadow-[0_0_6px_rgba(196,129,58,0.5)] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-capybara/80 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-capybara [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-capybara/80 [&::-moz-range-thumb]:shadow-[0_0_6px_rgba(196,129,58,0.5)]"
-        />
-      </div>
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={volume}
+        onChange={(e) => setVolume(parseFloat(e.target.value))}
+        className="w-16 h-[3px] appearance-none bg-cream/20 rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-capybara [&::-webkit-slider-thumb]:shadow-[0_0_6px_rgba(196,129,58,0.5)] [&::-moz-range-thumb]:w-2.5 [&::-moz-range-thumb]:h-2.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-capybara [&::-moz-range-thumb]:shadow-[0_0_6px_rgba(196,129,58,0.5)]"
+      />
     </div>
   );
 }
