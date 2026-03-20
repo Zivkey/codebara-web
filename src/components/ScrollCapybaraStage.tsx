@@ -105,8 +105,9 @@ export default function ScrollCapybaraStage() {
 
       setScrollPercent(progress);
       setCurrentChapter(activeChapter);
-      // Notify navbar of chapter change
+      // Notify navbar of chapter change and scroll progress
       window.dispatchEvent(new CustomEvent("chapterChange", { detail: activeChapter }));
+      window.dispatchEvent(new CustomEvent("scrollProgress", { detail: progress }));
     },
     []
   );

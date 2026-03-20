@@ -20,13 +20,21 @@ const chapterThemes: Record<number, { accent: string; accentHover: string; borde
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [chapter, setChapter] = useState(0);
+  const [scrollPercent, setScrollPercent] = useState(0);
 
   useEffect(() => {
     const handler = (e: Event) => {
       setChapter((e as CustomEvent).detail);
     };
+    const progressHandler = (e: Event) => {
+      setScrollPercent((e as CustomEvent).detail);
+    };
     window.addEventListener("chapterChange", handler);
-    return () => window.removeEventListener("chapterChange", handler);
+    window.addEventListener("scrollProgress", progressHandler);
+    return () => {
+      window.removeEventListener("chapterChange", handler);
+      window.removeEventListener("scrollProgress", progressHandler);
+    };
   }, []);
 
   const theme = chapterThemes[chapter] || chapterThemes[0];
@@ -136,6 +144,19 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* Mobile progress bar */}
+      <div className="sm:hidden absolute bottom-0 left-0 right-0 h-[2px] bg-white/[0.07]">
+        <div
+          className="absolute top-0 left-0 h-full rounded-r-full transition-colors duration-500"
+          style={{
+            width: `${scrollPercent * 100}%`,
+            background: chapter === 0 ? "#C4813A" :
+              chapter === 1 ? "#00FF41" :
+              chapter === 2 ? "#A67C52" :
+              "#C4813A",
+          }}
+        />
+      </div>
     </motion.nav>
   );
 }

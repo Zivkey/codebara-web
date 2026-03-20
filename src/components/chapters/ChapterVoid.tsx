@@ -69,17 +69,21 @@ export default function ChapterVoid({ progress, active }: Props) {
         </div>
       </motion.div>
 
-      {/* BOTTOM LEFT - Tagline */}
+      {/* BOTTOM LEFT - Code + Capybara explanation */}
       <motion.div
         className="absolute left-6 sm:left-12 lg:left-24 bottom-[24%] sm:bottom-[18%]"
         style={taglineStyle}
       >
-        <p className="font-mono text-xs sm:text-sm text-cream/60 max-w-[320px] leading-relaxed">
-          Crafting robust backends & pixel-perfect
-          <br />
-          frontends from{" "}
-          <span className="text-capybara">Ni&scaron;, Serbia</span>
-        </p>
+        <div className="flex flex-col gap-2">
+          <p className="font-mono text-sm sm:text-lg text-cream/70 tracking-wide whitespace-nowrap">
+            <span className="text-cream font-bold">code</span>
+            <span className="text-capybara mx-1.5 sm:mx-2">+</span>
+            <span className="text-cream font-bold">capybara</span>
+          </p>
+          <p className="font-mono text-[11px] sm:text-sm text-cream/45 max-w-[320px]">
+            the world&apos;s chillest rodent — calm under pressure, just like clean code should be
+          </p>
+        </div>
         <div className="w-20 h-[2px] bg-gradient-to-r from-capybara/40 to-transparent mt-5" />
       </motion.div>
 
