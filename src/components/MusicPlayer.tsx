@@ -11,7 +11,7 @@ const chapterAccentColors: Record<number, string> = {
 
 export default function MusicPlayer({ chapter = 0 }: { chapter?: number }) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.08);
 
   const accentColor = chapterAccentColors[chapter] || chapterAccentColors[0];
@@ -21,20 +21,6 @@ export default function MusicPlayer({ chapter = 0 }: { chapter?: number }) {
       audioRef.current.volume = volume;
     }
   }, [volume]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        setIsPlaying(false);
-        const startOnClick = () => {
-          audioRef.current?.play();
-          setIsPlaying(true);
-          document.removeEventListener("click", startOnClick);
-        };
-        document.addEventListener("click", startOnClick);
-      });
-    }
-  }, []);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
