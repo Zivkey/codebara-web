@@ -85,44 +85,44 @@ export default function ChapterConnect({ progress, active }: Props) {
       >
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="relative w-full max-w-md lg:max-w-lg rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/15 sm:border-white/10 bg-onyx/80 sm:bg-white/[0.03] backdrop-blur-xl sm:backdrop-blur-md overflow-hidden"
+          className="relative w-full max-w-md lg:max-w-lg rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-white/15 sm:border-white/10 bg-onyx/80 sm:bg-white/[0.03] backdrop-blur-xl sm:backdrop-blur-md overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cream/15 to-transparent" />
 
           {/* Mobile-only title */}
-          <div className="lg:hidden mb-6">
-            <h2 className="font-syne text-3xl sm:text-4xl font-bold leading-[0.9] tracking-tight mb-2">
+          <div className="lg:hidden mb-4 sm:mb-6">
+            <h2 className="font-syne text-2xl sm:text-4xl font-bold leading-[0.9] tracking-tight mb-1.5 sm:mb-2">
               <span className="text-cream">Get In </span>
               <span className="text-cream/70">Touch</span>
             </h2>
-            <p className="font-syne text-sm text-cream/60">
+            <p className="font-syne text-xs sm:text-sm text-cream/60">
               Have an idea? Let&apos;s make it <span className="text-cream font-bold">real</span>.
             </p>
           </div>
 
-          <div className="space-y-5 mb-8">
+          <div className="space-y-3 sm:space-y-5 mb-5 sm:mb-8">
             <motion.div style={nameStyle}>
-              <label className="font-syne text-xs text-cream uppercase tracking-wider mb-2 block">Name</label>
+              <label className="font-syne text-xs text-cream uppercase tracking-wider mb-1.5 sm:mb-2 block">Name</label>
               <input
                 type="text"
                 placeholder="Your name"
-                className="w-full font-syne text-lg bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/50 focus:outline-none focus:border-cream/30 transition-colors"
+                className="w-full font-syne text-base sm:text-lg bg-white/[0.04] border border-white/15 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-cream placeholder:text-cream/50 focus:outline-none focus:border-cream/30 transition-colors"
               />
             </motion.div>
             <motion.div style={emailStyle}>
-              <label className="font-syne text-xs text-cream uppercase tracking-wider mb-2 block">Email</label>
+              <label className="font-syne text-xs text-cream uppercase tracking-wider mb-1.5 sm:mb-2 block">Email</label>
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="w-full font-syne text-lg bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/50 focus:outline-none focus:border-cream/30 transition-colors"
+                className="w-full font-syne text-base sm:text-lg bg-white/[0.04] border border-white/15 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-cream placeholder:text-cream/50 focus:outline-none focus:border-cream/30 transition-colors"
               />
             </motion.div>
             <motion.div style={msgStyle}>
-              <label className="font-syne text-xs text-cream uppercase tracking-wider mb-2 block">Message</label>
+              <label className="font-syne text-xs text-cream uppercase tracking-wider mb-1.5 sm:mb-2 block">Message</label>
               <textarea
                 placeholder="Tell me about your project..."
-                rows={4}
-                className="w-full font-syne text-lg bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/50 focus:outline-none focus:border-cream/30 transition-colors resize-none"
+                rows={3}
+                className="w-full font-syne text-base sm:text-lg bg-white/[0.04] border border-white/15 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-cream placeholder:text-cream/50 focus:outline-none focus:border-cream/30 transition-colors resize-none"
               />
             </motion.div>
           </div>
@@ -130,7 +130,7 @@ export default function ChapterConnect({ progress, active }: Props) {
           <motion.div style={btnStyle}>
             <button
               type="submit"
-              className="w-full font-syne text-base sm:text-lg font-bold py-3 sm:py-4 bg-capybara rounded-2xl text-cream hover:brightness-110 transition-all"
+              className="w-full font-syne text-sm sm:text-lg font-bold py-2.5 sm:py-4 bg-capybara rounded-xl sm:rounded-2xl text-cream hover:brightness-110 transition-all"
               style={{ boxShadow: "0 4px 20px rgba(196,129,58,0.2)" }}
             >
               Send Message
