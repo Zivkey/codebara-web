@@ -51,6 +51,7 @@ export default function Navbar() {
   };
 
   return (
+    <>
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -144,10 +145,12 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Mobile progress bar - 4 segmented sections */}
-      <div className="sm:hidden absolute bottom-0 left-0 right-0 flex gap-[2px]">
+    </motion.nav>
+
+      {/* Mobile progress bar - vertical segmented, right edge, below header */}
+      <div className="sm:hidden fixed right-0 top-[60px] bottom-0 z-50 flex flex-col gap-[2px] w-[3px] py-3">
         {[0, 1, 2, 3].map((id) => {
-          const activeColor = chapter === 0 ? "#C4813A" :
+          const sectionColor = chapter === 0 ? "#C4813A" :
             chapter === 1 ? "#00FF41" :
             chapter === 2 ? "#A67C52" :
             "#C4813A";
@@ -158,18 +161,18 @@ export default function Navbar() {
             : ((scrollPercent - sectionStart) / 0.25) * 100;
 
           return (
-            <div key={id} className="relative flex-1 h-[2px] bg-white/[0.07]">
+            <div key={id} className="relative flex-1 bg-white/[0.07] rounded-full">
               <div
-                className="absolute top-0 left-0 h-full rounded-full transition-colors duration-500"
+                className="absolute top-0 left-0 w-full rounded-full transition-colors duration-500"
                 style={{
-                  width: `${sectionFill}%`,
-                  background: sectionFill > 0 ? activeColor : "transparent",
+                  height: `${sectionFill}%`,
+                  background: sectionFill > 0 ? sectionColor : "transparent",
                 }}
               />
             </div>
           );
         })}
       </div>
-    </motion.nav>
+    </>
   );
 }
