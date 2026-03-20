@@ -80,7 +80,7 @@ export default function ChapterConnect({ progress, active }: Props) {
 
       {/* CONTACT FORM */}
       <motion.div
-        className="absolute left-4 right-4 top-0 bottom-0 flex items-center justify-center lg:left-[50%] lg:right-[7rem]"
+        className="absolute left-4 right-4 top-0 bottom-0 flex items-center justify-center lg:left-[60%] lg:right-[3rem]"
         style={formStyle}
       >
         <form

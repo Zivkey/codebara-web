@@ -147,6 +147,7 @@ html {
   transform-origin: center;
 }
 
+
 /* Video fading edge mask - heavy blur fade on all edges */
 .video-mask {
   -webkit-mask-image: radial-gradient(
