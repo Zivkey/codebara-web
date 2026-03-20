@@ -25,6 +25,11 @@ export const metadata: Metadata = {
     "DevOps",
     "freelance",
   ],
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "96x96" },
+    ],
+  },
 };
 
 export default function RootLayout({
