@@ -85,7 +85,7 @@ export default function ChapterConnect({ progress, active }: Props) {
       >
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="relative w-full max-w-md lg:max-w-lg rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/10 bg-white/[0.03] backdrop-blur-md overflow-hidden"
+          className="relative w-full max-w-md lg:max-w-lg rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/15 sm:border-white/10 bg-onyx/80 sm:bg-white/[0.03] backdrop-blur-xl sm:backdrop-blur-md overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cream/15 to-transparent" />
 

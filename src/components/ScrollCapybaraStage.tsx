@@ -34,6 +34,7 @@ export default function ScrollCapybaraStage() {
   const [currentChapter, setCurrentChapter] = useState(0);
   const [activeVideo, setActiveVideo] = useState(0);
   const [scrollPercent, setScrollPercent] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const chapterProgress0 = useMotionValue(0.01);
   const chapterProgress1 = useMotionValue(0);
   const chapterProgress2 = useMotionValue(0);
@@ -109,6 +110,13 @@ export default function ScrollCapybaraStage() {
     },
     []
   );
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -191,7 +199,8 @@ export default function ScrollCapybaraStage() {
                   ref={(el) => {
                     videoRefs.current[i] = el;
                   }}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover sm:object-center ${i > 0 ? "object-[60%_center]" : ""}`}
+                  style={i === 0 && isMobile ? { objectPosition: `${40 + Math.min(scrollPercent / 0.333, 1) * 20}% center` } : undefined}
                   muted
                   playsInline
                   preload="auto"
