@@ -76,7 +76,7 @@ export default function ChapterBuild({ progress, active }: Props) {
       </motion.div>
 
       {/* SERVICE CARDS - dark hacker terminals */}
-      <div className="absolute bottom-[3%] sm:bottom-[5%] left-1/2 -translate-x-1/2 w-full max-w-[90rem] px-4 sm:px-8">
+      <div className="absolute bottom-[3%] sm:bottom-[5%] left-1/2 -translate-x-1/2 w-full max-w-[90rem] pl-4 pr-7 sm:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-8">
           {services.map((service, i) => (
             <motion.div

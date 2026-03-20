@@ -246,7 +246,7 @@ export default function ScrollCapybaraStage() {
                   ref={(el) => {
                     videoRefs.current[i] = el;
                   }}
-                  className={`w-full h-full object-cover sm:object-center ${i > 0 ? "object-[60%_center]" : ""}`}
+                  className={`w-full h-full object-cover sm:object-center ${i > 0 ? "object-[55%_center]" : ""}`}
                   style={i === 0 && isMobile ? { objectPosition: `${40 + Math.min(scrollPercent / 0.333, 1) * 20}% center` } : undefined}
                   muted
                   playsInline

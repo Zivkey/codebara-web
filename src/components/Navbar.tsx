@@ -161,9 +161,9 @@ export default function Navbar() {
             : ((scrollPercent - sectionStart) / 0.25) * 100;
 
           return (
-            <div key={id} className="relative flex-1 bg-white/[0.07] rounded-full">
+            <div key={id} className="relative flex-1 bg-white/[0.05] rounded-full">
               <div
-                className="absolute top-0 left-0 w-full rounded-full transition-colors duration-500"
+                className="absolute top-0 left-0 w-full rounded-full transition-colors duration-500 opacity-50"
                 style={{
                   height: `${sectionFill}%`,
                   background: sectionFill > 0 ? sectionColor : "transparent",

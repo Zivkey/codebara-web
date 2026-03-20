@@ -62,7 +62,7 @@ export default function ChapterWork({ progress, active }: Props) {
       </motion.div>
 
       {/* PORTFOLIO CARDS - warm cozy style */}
-      <div className="absolute left-4 right-4 sm:left-12 sm:right-auto lg:left-24 bottom-[3%] sm:top-[28%] sm:bottom-auto sm:w-[380px] flex flex-col gap-2 sm:gap-3">
+      <div className="absolute left-4 right-7 sm:left-12 sm:right-auto lg:left-24 bottom-[3%] sm:top-[28%] sm:bottom-auto sm:w-[380px] flex flex-col gap-2 sm:gap-3">
         {portfolio.map((project, i) => (
           <motion.div
             key={project.title}
