@@ -144,18 +144,31 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Mobile progress bar */}
-      <div className="sm:hidden absolute bottom-0 left-0 right-0 h-[2px] bg-white/[0.07]">
-        <div
-          className="absolute top-0 left-0 h-full rounded-r-full transition-colors duration-500"
-          style={{
-            width: `${scrollPercent * 100}%`,
-            background: chapter === 0 ? "#C4813A" :
-              chapter === 1 ? "#00FF41" :
-              chapter === 2 ? "#A67C52" :
-              "#C4813A",
-          }}
-        />
+      {/* Mobile progress bar - 4 segmented sections */}
+      <div className="sm:hidden absolute bottom-0 left-0 right-0 flex gap-[2px]">
+        {[0, 1, 2, 3].map((id) => {
+          const activeColor = chapter === 0 ? "#C4813A" :
+            chapter === 1 ? "#00FF41" :
+            chapter === 2 ? "#A67C52" :
+            "#C4813A";
+          const sectionStart = id * 0.25;
+          const sectionEnd = (id + 1) * 0.25;
+          const sectionFill = scrollPercent <= sectionStart ? 0
+            : scrollPercent >= sectionEnd ? 100
+            : ((scrollPercent - sectionStart) / 0.25) * 100;
+
+          return (
+            <div key={id} className="relative flex-1 h-[2px] bg-white/[0.07]">
+              <div
+                className="absolute top-0 left-0 h-full rounded-full transition-colors duration-500"
+                style={{
+                  width: `${sectionFill}%`,
+                  background: sectionFill > 0 ? activeColor : "transparent",
+                }}
+              />
+            </div>
+          );
+        })}
       </div>
     </motion.nav>
   );

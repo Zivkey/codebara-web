@@ -75,7 +75,7 @@ export default function ChapterVoid({ progress, active }: Props) {
         style={taglineStyle}
       >
         <div className="flex flex-col gap-2">
-          <p className="font-mono text-sm sm:text-lg text-cream/70 tracking-wide whitespace-nowrap">
+          <p className="font-mono text-lg sm:text-2xl text-cream/70 tracking-wide whitespace-nowrap">
             <span className="text-cream font-bold">code</span>
             <span className="text-capybara mx-1.5 sm:mx-2">+</span>
             <span className="text-cream font-bold">capybara</span>
