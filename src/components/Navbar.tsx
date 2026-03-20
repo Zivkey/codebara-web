@@ -148,7 +148,7 @@ export default function Navbar() {
     </motion.nav>
 
       {/* Mobile progress bar - vertical segmented, right edge, below header */}
-      <div className="sm:hidden fixed right-0 top-[60px] bottom-0 z-50 flex flex-col gap-[3px] w-[5px] py-3">
+      <div className="sm:hidden fixed right-0 top-[60px] bottom-0 z-50 flex flex-col gap-1 w-2 py-3">
         {[0, 1, 2, 3].map((id) => {
           const sectionColor = chapter === 0 ? "#C4813A" :
             chapter === 1 ? "#00FF41" :
