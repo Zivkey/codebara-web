@@ -73,7 +73,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             onClick={() => scrollTo("#contact")}
-            className={`btn-glow font-mono text-sm px-4 py-2 border ${theme.border} rounded-lg ${theme.btnText} ${theme.btnBg} transition-colors duration-500`}
+            className={`btn-glow font-mono text-sm px-4 py-2 border ${theme.border} rounded-lg ${theme.btnText} ${theme.btnBg} transition-colors duration-500 min-w-[130px] text-center`}
           >
             {theme.label}
           </motion.button>

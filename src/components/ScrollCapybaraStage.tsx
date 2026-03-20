@@ -32,7 +32,7 @@ export default function ScrollCapybaraStage() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([null, null, null]);
   const bgVideoRefs = useRef<(HTMLVideoElement | null)[]>([null, null, null]);
   const [currentChapter, setCurrentChapter] = useState(0);
-  const [activeVideo, setActiveVideo] = useState(-1);
+  const [activeVideo, setActiveVideo] = useState(0);
   const [scrollPercent, setScrollPercent] = useState(0);
   const chapterProgress0 = useMotionValue(0.01);
   const chapterProgress1 = useMotionValue(0);
