@@ -118,6 +118,52 @@ export default function ScrollCapybaraStage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Force-load videos on mobile - browsers ignore preload="auto" to save data
+  useEffect(() => {
+    let cancelled = false;
+
+    const forceLoadVideos = () => {
+      if (cancelled) return;
+      const allVideos = [
+        ...videoRefs.current.filter(Boolean),
+        ...bgVideoRefs.current.filter(Boolean),
+      ] as HTMLVideoElement[];
+
+      for (const video of allVideos) {
+        // play()+pause() forces the browser to buffer the video data
+        const playPromise = video.play();
+        if (playPromise) {
+          playPromise
+            .then(() => {
+              video.pause();
+              video.currentTime = 0;
+            })
+            .catch(() => {
+              // Autoplay blocked - still try to load
+              video.load();
+            });
+        }
+      }
+    };
+
+    // Try immediately, and also on first user interaction (needed for iOS)
+    const raf = requestAnimationFrame(forceLoadVideos);
+    const interactionHandler = () => {
+      forceLoadVideos();
+      window.removeEventListener("touchstart", interactionHandler);
+      window.removeEventListener("scroll", interactionHandler);
+    };
+    window.addEventListener("touchstart", interactionHandler, { once: true });
+    window.addEventListener("scroll", interactionHandler, { once: true });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      window.removeEventListener("touchstart", interactionHandler);
+      window.removeEventListener("scroll", interactionHandler);
+    };
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
