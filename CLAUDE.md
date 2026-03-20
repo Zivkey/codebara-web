@@ -1,7 +1,7 @@
 # Codebara 3D - Portfolio Website
 
 ## Project Overview
-Codebara is a scroll-driven portfolio website for a full-stack developer from Niš, Serbia. The site features 3 scroll-synced video clips with 4 distinct themed chapters, each with unique visual identity. Built with Next.js 14, GSAP ScrollTrigger, Framer Motion, and Tailwind CSS.
+Codebara is a scroll-driven portfolio website for a code craftsman from Niš, Serbia. The site features 3 scroll-synced video clips with 4 distinct themed chapters, each with unique visual identity. Built with Next.js 14, GSAP ScrollTrigger, Framer Motion, and Tailwind CSS.
 
 ## Tech Stack
 - **Framework:** Next.js 14 (App Router)
@@ -101,6 +101,15 @@ Anchors are offset forward from chapter start so navigation lands when content i
 
 ### Scrollbar
 Browser scrollbar is hidden. Custom progress bar on the right side shows scroll position with color-coded fill per chapter.
+
+### Nav Scroll with Lenis
+Lenis smooth scroll intercepts `scrollIntoView` and `window.scrollTo({behavior: "smooth"})`. Use instant `window.scrollTo(0, top)` and let Lenis handle smoothing. Also use `requestAnimationFrame` to defer scroll after React re-renders (e.g., closing mobile menu).
+
+### Responsive Layout
+- **ChapterVoid (Hero):** On mobile, tech tags ("Code Craftsman" + Spring Boot/React/DevOps) stack below the title instead of floating right. Tagline and CTA button are vertically separated (bottom-[24%] and bottom-[12%]).
+- **ChapterWork (Portfolio):** Header "Recent Work" uses smaller font on mobile (text-3xl vs text-7xl). Cards start at top-[28%] on sm+ to avoid overlap with description text.
+- **ChapterConnect (Contact):** On mobile (below lg), left column is hidden and the form includes its own title + subtitle + status. On lg+, two-column layout with left info + right form.
+- **Navbar:** Active nav item is colored per chapter theme. Gap reduces on tablet (gap-4 vs gap-8). CTA button has min-w-[130px] to prevent layout shift on label change.
 
 ## Style Guidelines
 - Cards use `bg-[#1a1714]/90 backdrop-blur-md border-white/15` (sections 2-3) or `bg-white/[0.03] backdrop-blur-md` (section 4)

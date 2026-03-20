@@ -30,7 +30,7 @@ export default function ChapterWork({ progress, active }: Props) {
     >
       {/* RIGHT - Section header - warm & relaxed */}
       <motion.div
-        className="absolute right-6 sm:right-12 lg:right-24 top-[10%] sm:top-[13%] text-right"
+        className="absolute right-4 sm:right-12 lg:right-24 top-[3%] sm:top-[13%] text-right"
         style={headerStyle}
       >
         <div className="flex items-center justify-end gap-3 mb-4">
@@ -39,7 +39,7 @@ export default function ChapterWork({ progress, active }: Props) {
           </span>
           <div className="w-10 h-[2px] bg-gradient-to-r from-coffee/50 to-latte/30" />
         </div>
-        <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-bold leading-[0.95]">
+        <h2 className="font-syne text-3xl sm:text-5xl lg:text-7xl font-bold leading-[0.95]">
           Recent
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-coffee to-latte">Work</span>
@@ -48,7 +48,7 @@ export default function ChapterWork({ progress, active }: Props) {
 
       {/* LEFT - Description - chill vibe */}
       <motion.div
-        className="absolute left-6 sm:left-12 lg:left-24 top-[12%] sm:top-[18%] hidden sm:block"
+        className="absolute left-6 sm:left-12 lg:left-24 top-[12%] sm:top-[15%] hidden sm:block"
         style={descStyle}
       >
         <p className="font-syne text-sm text-latte/60 max-w-[240px] leading-relaxed italic">
@@ -62,7 +62,7 @@ export default function ChapterWork({ progress, active }: Props) {
       </motion.div>
 
       {/* PORTFOLIO CARDS - warm cozy style, stacked left */}
-      <div className="absolute left-4 right-4 sm:left-12 sm:right-auto lg:left-24 top-[22%] sm:top-[24%] sm:w-[380px] flex flex-col gap-2 sm:gap-3">
+      <div className="absolute left-4 right-4 sm:left-12 sm:right-auto lg:left-24 top-[22%] sm:top-[28%] sm:w-[380px] flex flex-col gap-2 sm:gap-3">
         {portfolio.map((project, i) => (
           <motion.div
             key={project.title}

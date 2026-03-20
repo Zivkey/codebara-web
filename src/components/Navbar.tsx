@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import MusicPlayer from "./MusicPlayer";
 
 const navItems = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+  { label: "Services", href: "#services", chapter: 1 },
+  { label: "Work", href: "#work", chapter: 2 },
+  { label: "Contact", href: "#contact", chapter: 3 },
 ];
 
 const chapterThemes: Record<number, { accent: string; accentHover: string; border: string; btnBg: string; btnText: string; label: string }> = {
@@ -32,9 +32,14 @@ export default function Navbar() {
   const theme = chapterThemes[chapter] || chapterThemes[0];
 
   const scrollTo = (href: string) => {
-    setIsOpen(false);
     const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      setIsOpen(false);
+      requestAnimationFrame(() => {
+        window.scrollTo(0, top);
+      });
+    }
   };
 
   return (
@@ -54,7 +59,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-4 lg:gap-8">
           <MusicPlayer chapter={chapter} />
           {navItems.map((item, i) => (
             <motion.button
@@ -63,7 +68,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.1 }}
               onClick={() => scrollTo(item.href)}
-              className={`font-mono text-sm text-cream/60 ${theme.accentHover} transition-colors duration-300`}
+              className={`font-mono text-sm ${chapter === item.chapter ? chapterThemes[item.chapter].accent : "text-cream/60"} ${theme.accentHover} transition-colors duration-300`}
             >
               {item.label}
             </motion.button>
@@ -86,7 +91,7 @@ export default function Navbar() {
           aria-label="Toggle menu"
         >
           <motion.span
-            animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+            animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
             className="block w-6 h-0.5 bg-cream"
           />
           <motion.span
@@ -94,7 +99,7 @@ export default function Navbar() {
             className="block w-6 h-0.5 bg-cream"
           />
           <motion.span
-            animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+            animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
             className="block w-6 h-0.5 bg-cream"
           />
         </button>
@@ -116,7 +121,7 @@ export default function Navbar() {
                 <button
                   key={item.label}
                   onClick={() => scrollTo(item.href)}
-                  className={`font-mono text-sm text-cream/60 ${theme.accentHover} transition-colors text-left`}
+                  className={`font-mono text-sm ${chapter === item.chapter ? chapterThemes[item.chapter].accent : "text-cream/60"} ${theme.accentHover} transition-colors text-left`}
                 >
                   {item.label}
                 </button>

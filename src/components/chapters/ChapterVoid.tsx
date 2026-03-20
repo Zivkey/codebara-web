@@ -44,23 +44,23 @@ export default function ChapterVoid({ progress, active }: Props) {
         </h1>
       </motion.div>
 
-      {/* RIGHT - Tech tags */}
+      {/* Tech tags - below title on mobile, right side on desktop */}
       <motion.div
-        className="absolute right-6 sm:right-12 lg:right-24 top-[15%] sm:top-[22%] text-right"
+        className="absolute left-6 sm:right-12 lg:right-24 top-[35%] sm:top-[22%] sm:left-auto sm:text-right"
         style={techStyle}
       >
-        <div className="flex flex-col items-end gap-4">
+        <div className="flex flex-col items-start sm:items-end gap-3 sm:gap-4">
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs text-cream/60 uppercase tracking-[0.2em]">
-              Full-Stack
+              Code Craftsman
             </span>
             <div className="w-2.5 h-2.5 rounded-full bg-capybara animate-pulse" />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-row sm:flex-col gap-2">
             {["Spring Boot", "React", "DevOps"].map((tech) => (
               <span
                 key={tech}
-                className="font-mono text-sm text-cream/70 border border-white/15 px-4 py-1.5 rounded-full bg-white/[0.06]"
+                className="font-mono text-xs sm:text-sm text-cream/70 border border-white/15 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/[0.06]"
               >
                 {tech}
               </span>
@@ -71,10 +71,10 @@ export default function ChapterVoid({ progress, active }: Props) {
 
       {/* BOTTOM LEFT - Tagline */}
       <motion.div
-        className="absolute left-6 sm:left-12 lg:left-24 bottom-[16%] sm:bottom-[18%]"
+        className="absolute left-6 sm:left-12 lg:left-24 bottom-[24%] sm:bottom-[18%]"
         style={taglineStyle}
       >
-        <p className="font-mono text-sm text-cream/60 max-w-[320px] leading-relaxed">
+        <p className="font-mono text-xs sm:text-sm text-cream/60 max-w-[320px] leading-relaxed">
           Crafting robust backends & pixel-perfect
           <br />
           frontends from{" "}
@@ -85,7 +85,7 @@ export default function ChapterVoid({ progress, active }: Props) {
 
       {/* BOTTOM RIGHT - CTA */}
       <motion.div
-        className="absolute right-6 sm:right-12 lg:right-24 bottom-[16%] sm:bottom-[18%]"
+        className="absolute left-6 sm:left-auto sm:right-12 lg:right-24 bottom-[12%] sm:bottom-[18%]"
         style={ctaStyle}
       >
         <button

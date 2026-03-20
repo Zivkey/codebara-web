@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Head -->
+  <ellipse cx="32" cy="34" rx="22" ry="20" fill="#C4813A"/>
+  <!-- Ears -->
+  <ellipse cx="14" cy="18" rx="6" ry="5" fill="#A67C52"/>
+  <ellipse cx="14" cy="18" rx="4" ry="3" fill="#D4A574"/>
+  <ellipse cx="50" cy="18" rx="6" ry="5" fill="#A67C52"/>
+  <ellipse cx="50" cy="18" rx="4" ry="3" fill="#D4A574"/>
+  <!-- Snout -->
+  <ellipse cx="32" cy="42" rx="14" ry="10" fill="#D4A574"/>
+  <!-- Eyes -->
+  <circle cx="23" cy="30" r="3" fill="#0D0B09"/>
+  <circle cx="41" cy="30" r="3" fill="#0D0B09"/>
+  <circle cx="24" cy="29" r="1" fill="#F0E6D2"/>
+  <circle cx="42" cy="29" r="1" fill="#F0E6D2"/>
+  <!-- Nose -->
+  <ellipse cx="32" cy="38" rx="4" ry="3" fill="#0D0B09"/>
+  <ellipse cx="32" cy="37.5" rx="1.5" ry="0.8" fill="#333"/>
+  <!-- Nostrils -->
+  <circle cx="30" cy="38.5" r="0.8" fill="#333"/>
+  <circle cx="34" cy="38.5" r="0.8" fill="#333"/>
+  <!-- Mouth -->
+  <path d="M28 43 Q32 46 36 43" stroke="#A67C52" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Whisker dots -->
+  <circle cx="22" cy="40" r="1" fill="#A67C52"/>
+  <circle cx="19" cy="42" r="1" fill="#A67C52"/>
+  <circle cx="42" cy="40" r="1" fill="#A67C52"/>
+  <circle cx="45" cy="42" r="1" fill="#A67C52"/>
+</svg>

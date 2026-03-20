@@ -26,8 +26,8 @@ export default function ChapterConnect({ progress, active }: Props) {
         opacity: active ? 1 : 0,
       }}
     >
-      {/* LEFT COLUMN */}
-      <div className="absolute left-6 sm:left-12 lg:left-24 top-0 bottom-0 flex flex-col justify-center gap-8 max-w-[400px]">
+      {/* LEFT COLUMN - hidden on mobile, form has its own title */}
+      <div className="absolute left-6 sm:left-12 lg:left-24 top-0 bottom-0 hidden lg:flex flex-col justify-center gap-8 max-w-[400px]">
         {/* Big bold heading */}
         <motion.div style={headerStyle}>
           <h2 className="font-syne text-5xl sm:text-7xl lg:text-[6rem] font-bold leading-[0.9] tracking-tight">
@@ -78,16 +78,27 @@ export default function ChapterConnect({ progress, active }: Props) {
         </motion.div>
       </div>
 
-      {/* RIGHT - CONTACT FORM */}
+      {/* CONTACT FORM */}
       <motion.div
-        className="absolute right-6 sm:right-16 lg:right-28 top-0 bottom-0 flex items-center w-full max-w-md sm:max-w-lg"
+        className="absolute left-4 right-4 top-0 bottom-0 flex items-center justify-center lg:left-[50%] lg:right-[7rem]"
         style={formStyle}
       >
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="relative w-full rounded-3xl p-8 sm:p-10 border border-white/10 bg-white/[0.03] backdrop-blur-md overflow-hidden"
+          className="relative w-full max-w-md lg:max-w-lg rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/10 bg-white/[0.03] backdrop-blur-md overflow-hidden"
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cream/15 to-transparent" />
+
+          {/* Mobile-only title */}
+          <div className="lg:hidden mb-6">
+            <h2 className="font-syne text-3xl sm:text-4xl font-bold leading-[0.9] tracking-tight mb-2">
+              <span className="text-cream">Get In </span>
+              <span className="text-cream/70">Touch</span>
+            </h2>
+            <p className="font-syne text-sm text-cream/60">
+              Have an idea? Let&apos;s make it <span className="text-cream font-bold">real</span>.
+            </p>
+          </div>
 
           <div className="space-y-5 mb-8">
             <motion.div style={nameStyle}>
@@ -119,11 +130,18 @@ export default function ChapterConnect({ progress, active }: Props) {
           <motion.div style={btnStyle}>
             <button
               type="submit"
-              className="w-full font-syne text-lg font-bold py-4 bg-capybara rounded-2xl text-cream hover:brightness-110 transition-all"
+              className="w-full font-syne text-base sm:text-lg font-bold py-3 sm:py-4 bg-capybara rounded-2xl text-cream hover:brightness-110 transition-all"
               style={{ boxShadow: "0 4px 20px rgba(196,129,58,0.2)" }}
             >
               Send Message
             </button>
+            {/* Mobile-only status */}
+            <div className="lg:hidden flex items-center justify-center gap-3 mt-4">
+              <div className="w-2.5 h-2.5 rounded-full bg-capybara animate-pulse" />
+              <span className="font-mono text-xs text-cream/50">
+                Available &middot; Response time: &lt; 24h
+              </span>
+            </div>
           </motion.div>
         </form>
       </motion.div>

@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Codebara | Full-Stack Developer",
+  title: "Codebara | Code Craftsman",
   description:
     "Freelance full-stack developer specializing in Java Spring Boot, React, and DevOps. Building robust, scalable applications.",
   keywords: [
