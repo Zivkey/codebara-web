@@ -22,9 +22,9 @@ const chapterColors: Record<number, { text: string; line: string; bg: string; gl
 };
 
 const videoSources = [
-  { src: "/videos/1-2.mp4", range: [0, 0.333] },
-  { src: "/videos/2-3.mp4", range: [0.333, 0.666] },
-  { src: "/videos/3-4.mp4", range: [0.666, 1] },
+  { src: "/videos/1-2.mp4", poster: "/videos/poster-1.webp", range: [0, 0.333] },
+  { src: "/videos/2-3.mp4", poster: "/videos/poster-2.webp", range: [0.333, 0.666] },
+  { src: "/videos/3-4.mp4", poster: "/videos/poster-3.webp", range: [0.666, 1] },
 ];
 
 export default function ScrollCapybaraStage() {
@@ -35,6 +35,8 @@ export default function ScrollCapybaraStage() {
   const [activeVideo, setActiveVideo] = useState(0);
   const [scrollPercent, setScrollPercent] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [videosReady, setVideosReady] = useState(false);
+  const videoLoadState = useRef([false, false, false]);
   const chapterProgress0 = useMotionValue(0.01);
   const chapterProgress1 = useMotionValue(0);
   const chapterProgress2 = useMotionValue(0);
@@ -119,32 +121,72 @@ export default function ScrollCapybaraStage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Track video readiness via canplaythrough
+  useEffect(() => {
+    const handlers: Array<() => void> = [];
+
+    const checkReady = () => {
+      // Ready when at least the first foreground video can play
+      if (videoLoadState.current[0]) {
+        setVideosReady(true);
+      }
+    };
+
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      // Already buffered enough
+      if (video.readyState >= 3) {
+        videoLoadState.current[i] = true;
+        checkReady();
+        return;
+      }
+      const handler = () => {
+        videoLoadState.current[i] = true;
+        checkReady();
+      };
+      video.addEventListener("canplaythrough", handler, { once: true });
+      handlers.push(() => video.removeEventListener("canplaythrough", handler));
+    });
+
+    return () => handlers.forEach((h) => h());
+  }, []);
+
   // Force-load videos on mobile - browsers ignore preload="auto" to save data
+  // Prioritize first video, then load the rest
   useEffect(() => {
     let cancelled = false;
 
+    const forceLoadVideo = (video: HTMLVideoElement) => {
+      const playPromise = video.play();
+      if (playPromise) {
+        playPromise
+          .then(() => {
+            video.pause();
+            video.currentTime = 0;
+          })
+          .catch(() => {
+            video.load();
+          });
+      }
+    };
+
     const forceLoadVideos = () => {
       if (cancelled) return;
-      const allVideos = [
-        ...videoRefs.current.filter(Boolean),
-        ...bgVideoRefs.current.filter(Boolean),
-      ] as HTMLVideoElement[];
+      // Load first foreground video first (visible on load)
+      const firstVideo = videoRefs.current[0];
+      if (firstVideo) forceLoadVideo(firstVideo);
 
-      for (const video of allVideos) {
-        // play()+pause() forces the browser to buffer the video data
-        const playPromise = video.play();
-        if (playPromise) {
-          playPromise
-            .then(() => {
-              video.pause();
-              video.currentTime = 0;
-            })
-            .catch(() => {
-              // Autoplay blocked - still try to load
-              video.load();
-            });
+      // Then load the rest with a small delay to prioritize first
+      setTimeout(() => {
+        if (cancelled) return;
+        const remaining = [
+          ...videoRefs.current.slice(1).filter(Boolean),
+          ...bgVideoRefs.current.filter(Boolean),
+        ] as HTMLVideoElement[];
+        for (const video of remaining) {
+          forceLoadVideo(video);
         }
-      }
+      }, 100);
     };
 
     // Try immediately, and also on first user interaction (needed for iOS)
@@ -219,7 +261,8 @@ export default function ScrollCapybaraStage() {
                 className="absolute w-full h-full object-cover scale-150 blur-[100px] opacity-50 saturate-[1.8]"
                 muted
                 playsInline
-                preload="auto"
+                preload={i === 0 ? "auto" : "metadata"}
+                poster={v.poster}
                 src={v.src}
                 ref={(el) => {
                   bgVideoRefs.current[i] = el;
@@ -250,12 +293,36 @@ export default function ScrollCapybaraStage() {
                   style={i === 0 && isMobile ? { objectPosition: `${40 + Math.min(scrollPercent / 0.333, 1) * 15}% center` } : undefined}
                   muted
                   playsInline
-                  preload="auto"
+                  preload={i === 0 ? "auto" : "metadata"}
+                  poster={v.poster}
                   src={v.src}
                 />
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Loading overlay - visible until first video is ready */}
+        <div
+          className={`absolute inset-0 z-[5] bg-onyx flex items-center justify-center transition-opacity duration-700 ${
+            videosReady ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          {/* Poster image as background during load */}
+          <img
+            src="/videos/poster-1.webp"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-30 video-mask"
+          />
+          <div className="absolute inset-0 bg-onyx/60" />
+          {/* Loading indicator */}
+          <div className="relative flex flex-col items-center gap-6">
+            <div className="relative w-10 h-10">
+              <div className="absolute inset-0 rounded-full border-2 border-cream/10" />
+              <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-capybara animate-spin" />
+            </div>
+            <p className="font-mono text-xs text-cream/50 tracking-widest uppercase">Loading</p>
+          </div>
         </div>
 
         {/* Chapter UI overlays - above video */}
