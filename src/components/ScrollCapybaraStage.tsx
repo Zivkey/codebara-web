@@ -21,18 +21,11 @@ const chapterColors: Record<number, { text: string; line: string; bg: string; gl
   3: { text: "text-capybara", line: "bg-capybara/30", bg: "bg-capybara", glow: "0 0 12px 2px rgba(196,129,58,0.4)" },
 };
 
-const videoSources = [
-  { src: "/videos/1-2.mp4", range: [0, 0.333] },
-  { src: "/videos/2-3.mp4", range: [0.333, 0.666] },
-  { src: "/videos/3-4.mp4", range: [0.666, 1] },
-];
-
 export default function ScrollCapybaraStage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([null, null, null]);
-  const bgVideoRefs = useRef<(HTMLVideoElement | null)[]>([null, null, null]);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const bgVideoRef = useRef<HTMLVideoElement | null>(null);
   const [currentChapter, setCurrentChapter] = useState(0);
-  const [activeVideo, setActiveVideo] = useState(0);
   const [scrollPercent, setScrollPercent] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const chapterProgress0 = useMotionValue(0.01);
@@ -43,37 +36,16 @@ export default function ScrollCapybaraStage() {
 
   const handleScrollProgress = useCallback(
     (progress: number) => {
-      // Set video currentTime directly - no smoothing
-      let newActiveVideo = -1;
-      for (let i = 0; i < videoSources.length; i++) {
-        const [start, end] = videoSources[i].range;
-        if (progress >= start && progress < end) {
-          newActiveVideo = i;
-          const video = videoRefs.current[i];
-          const bgVideo = bgVideoRefs.current[i];
-          if (video && video.duration) {
-            const localProgress = (progress - start) / (end - start);
-            const time = localProgress * video.duration;
-            video.currentTime = time;
-            if (bgVideo && bgVideo.duration) {
-              bgVideo.currentTime = time;
-            }
-          }
-          break;
+      // Set video currentTime directly from scroll progress
+      const video = videoRef.current;
+      const bgVideo = bgVideoRef.current;
+      if (video && video.duration) {
+        const time = Math.min(progress, 1) * video.duration;
+        video.currentTime = time;
+        if (bgVideo && bgVideo.duration) {
+          bgVideo.currentTime = time;
         }
       }
-      if (progress >= 1) {
-        newActiveVideo = 2;
-        const video = videoRefs.current[2];
-        const bgVideo = bgVideoRefs.current[2];
-        if (video && video.duration) {
-          video.currentTime = video.duration;
-          if (bgVideo && bgVideo.duration) {
-            bgVideo.currentTime = video.duration;
-          }
-        }
-      }
-      setActiveVideo(newActiveVideo);
 
       // Determine current chapter and update all progress values
       let activeChapter = 0;
@@ -125,10 +97,7 @@ export default function ScrollCapybaraStage() {
 
     const forceLoadVideos = () => {
       if (cancelled) return;
-      const allVideos = [
-        ...videoRefs.current.filter(Boolean),
-        ...bgVideoRefs.current.filter(Boolean),
-      ] as HTMLVideoElement[];
+      const allVideos = [videoRef.current, bgVideoRef.current].filter(Boolean) as HTMLVideoElement[];
 
       for (const video of allVideos) {
         // play()+pause() forces the browser to buffer the video data
@@ -205,57 +174,34 @@ export default function ScrollCapybaraStage() {
         {/* Background - base dark */}
         <div className="absolute inset-0 bg-onyx" />
 
-        {/* Background glow that follows video colors */}
+        {/* Background glow */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {videoSources.map((v, i) => (
-            <div
-              key={`bg-${v.src}`}
-              className={`absolute inset-0 ${
-                activeVideo === i ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              {/* Blurred duplicate video as background */}
-              <video
-                className="absolute w-full h-full object-cover scale-150 blur-[100px] opacity-50 saturate-[1.8]"
-                muted
-                playsInline
-                preload="auto"
-                src={v.src}
-                ref={(el) => {
-                  bgVideoRefs.current[i] = el;
-                }}
-              />
-              {/* Dark overlay to keep it subtle */}
-              <div className="absolute inset-0 bg-onyx/60" />
-            </div>
-          ))}
+          <div className="absolute inset-0">
+            <video
+              className="absolute w-full h-full object-cover scale-150 blur-[100px] opacity-50 saturate-[1.8]"
+              muted
+              playsInline
+              preload="auto"
+              src="/videos/full.mp4"
+              ref={(el) => { bgVideoRef.current = el; }}
+            />
+            <div className="absolute inset-0 bg-onyx/60" />
+          </div>
         </div>
 
-
-        {/* Videos - large, centered, with heavy fading edges */}
+        {/* Video - large, centered, with heavy fading edges */}
         <div className="absolute inset-0 flex items-center justify-center z-0">
-          {videoSources.map((v, i) => (
-            <div
-              key={v.src}
-              className={`absolute ${
-                activeVideo === i ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-            >
-              <div className="relative w-screen h-screen overflow-hidden video-mask">
-                <video
-                  ref={(el) => {
-                    videoRefs.current[i] = el;
-                  }}
-                  className={`w-full h-full object-cover sm:object-center ${i > 0 ? "object-[55%_center]" : ""}`}
-                  style={i === 0 && isMobile ? { objectPosition: `${40 + Math.min(scrollPercent / 0.333, 1) * 15}% center` } : undefined}
-                  muted
-                  playsInline
-                  preload="auto"
-                  src={v.src}
-                />
-              </div>
-            </div>
-          ))}
+          <div className="relative w-screen h-screen overflow-hidden video-mask">
+            <video
+              ref={(el) => { videoRef.current = el; }}
+              className="w-full h-full object-cover sm:object-center"
+              style={isMobile && scrollPercent < 0.333 ? { objectPosition: `${40 + Math.min(scrollPercent / 0.333, 1) * 15}% center` } : isMobile ? { objectPosition: "55% center" } : undefined}
+              muted
+              playsInline
+              preload="auto"
+              src="/videos/full.mp4"
+            />
+          </div>
         </div>
 
         {/* Chapter UI overlays - above video */}
